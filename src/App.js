@@ -5,6 +5,7 @@ import List from './components/List';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { fireMeUp, getMails, getInboxMails } from 'rdx/actions/App'
+import { LinearProgress } from '@material-ui/core';
 const styles = theme => ({
 	contentWrapper: {
 		position: 'absolute',
@@ -46,6 +47,7 @@ class App extends Component {
 			<div>
 				<AppBar mails={this.props.app.mails} />
 				<div className={classes.contentWrapper}>
+					<LinearProgress />
 					<Menu className={classes.menu} handleClick={this.menuItemClicked} />
 					<List className={classes.list} mails={this.props.app.mails} />
 				</div>

@@ -1,12 +1,13 @@
 
-import { START_APP, READ_MAILS } from 'rdx/types';
+import { START_APP, READ_MAILS, FETCHING_MAILS } from 'rdx/types';
 
 const APP_INITIAL_STATE = {
     started: false,
     mails: [],
     inboxMails: [],
     draftMails: [],
-    trashMails: []
+    trashMails: [],
+    isFetching: false
 };
 
 export default function (state, action) {
@@ -18,7 +19,14 @@ export default function (state, action) {
         case READ_MAILS:
             return {
                 ...state,
-                mails: action.payload
+                mails: action.payload,
+                isFetching: false
+            }
+        case FETCHING_MAILS:
+            return {
+                ...state,
+                mails: [],
+                isFetching: true
             }
         default:
             break;

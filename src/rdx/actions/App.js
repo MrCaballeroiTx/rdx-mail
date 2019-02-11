@@ -1,12 +1,24 @@
 
-import { START_APP, READ_MAILS } from '../types';
+import { START_APP, READ_MAILS, FETCHING_MAILS } from '../types';
 import data from '../../data';
 
 export const fireMeUp = (dispatch) => ({ type: START_APP });
 
-export const getMails = (emailType) => {
+export function fetchingMails() {
     return {
-        type: READ_MAILS,
-        payload: data.filter(email => email.type === emailType)
-    };
-};
+        type: FETCHING_MAILS
+    }
+}
+
+
+export const getMails = (emailType) => {
+    return (dispatch) => {
+        dispatch(fetchingMails())
+        setTimeout(() => {
+            return {
+                type: READ_MAILS,
+                payload: data.filter(email => email.type === emailType)
+            };
+        }, 3000);
+    }
+}
