@@ -4,7 +4,7 @@ import Menu from './components/Menu';
 import List from './components/List';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { fireMeUp } from 'rdx/actions/App'
+import { fireMeUp, getMails, getInboxMails } from 'rdx/actions/App'
 const styles = theme => ({
 	contentWrapper: {
 		position: 'absolute',
@@ -16,7 +16,7 @@ const styles = theme => ({
 		height: '100%',
 		float: 'left'
 	},
-	list : {
+	list: {
 		float: 'left',
 		width: 'calc(100% - 250px)'
 	}
@@ -27,21 +27,32 @@ class App extends Component {
 
 	componentWillMount() {
 		const { dispatch } = this.props;
-		dispatch(fireMeUp())
+		dispatch(fireMeUp());
+		this.getInboxMails("inbox");
 	}
 
-  render() {
-	  const { classes } = this.props; 
-    return (
-      <div>
-       	<AppBar /> 
-			<div className={classes.contentWrapper}>
-			<Menu className={classes.menu} />
-			<List className={classes.list} />
-		</div>
-      </div>
-    );
-  }
+	getInboxMails = (container) => {
+		const { dispatch } = this.props;
+		dispatch(getMails(container))
+	};
+
+	menuItemClicked = (e, container) => {
+		this.getInboxMails(container)
+	};
+
+	render() {
+		const { classes } = this.props;
+		return (
+			<div>
+				<AppBar mails={this.props.app.mails} />
+				<div className={classes.contentWrapper}>
+					<Menu className={classes.menu} handleClick={this.menuItemClicked} />
+					<List className={classes.list} mails={this.props.app.mails} />
+				</div>
+			</div>
+		);
+	}
 }
+
 
 export default connect((state) => state)(withStyles(styles)(App));

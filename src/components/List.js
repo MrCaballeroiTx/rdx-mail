@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
+import { Chip, List, ListItem, ListItemText, Checkbox } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
@@ -13,6 +10,9 @@ const styles = theme => ({
   },
   span: {
     marginLeft: '20px'
+  },
+  chip: {
+    margin: theme.spacing.unit
   }
 });
 
@@ -21,13 +21,13 @@ class CheckboxList extends React.Component {
     checked: [0],
   };
 
-  handleToggle = value => () => {
+  handleToggle = mail => () => {
     const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
+    const currentIndex = checked.indexOf(mail);
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push(mail);
     } else {
       newChecked.splice(currentIndex, 1);
     }
@@ -38,33 +38,34 @@ class CheckboxList extends React.Component {
   };
 
   render() {
-    const { classes, className } = this.props;
+    const { classes, className, mails } = this.props;
 
     return (
-        <div className={className}>
-            <List className={classes.root}>
-                {[0, 1, 2, 3].map(value => (
-                <ListItem key={value} role={undefined} dense button onClick={this.handleToggle(value)}>
-                    <Checkbox
-                    checked={this.state.checked.indexOf(value) !== -1}
-                    tabIndex={-1}
-                    disableRipple
-                    />
-                    <ListItemText>
-                      <strong>
-                        Hardcoded From to {value + 1}
-                      </strong>
-                      <span className={classes.span}>
-                        Hardcoded Subject
-                      </span>
-                      <span className={classes.span}>
-                        Hardcoded preview Hardcoded preview Hardcoded preview Hardcoded preview
-                      </span>
-                    </ListItemText>
-                </ListItem>
-                ))}
-            </List>
-        </div>
+      <div className={className}>
+        <List className={classes.root}>
+          {mails.map(mail => (
+            <ListItem key={mail.id} role={undefined} dense button onClick={this.handleToggle(mail)}>
+              <Checkbox
+                checked={this.state.checked.indexOf(mail) !== -1}
+                tabIndex={-1}
+                disableRipple
+              />
+              <ListItemText>
+                <strong>
+                  {mail.from}
+                </strong>
+                <span className={classes.span}>
+                  {mail.subject}
+                </span>
+                <span className={classes.span}>
+                  {mail.body}
+                </span>
+                <Chip label={mail.read ? 'Read' : 'NonRead'} className={classes.chip} />
+              </ListItemText>
+            </ListItem>
+          ))}
+        </List>
+      </div>
     );
   }
 }

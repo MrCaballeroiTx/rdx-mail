@@ -24,24 +24,24 @@ const styles = theme => ({
 });
 
 function ListItemComposition(props) {
-  const { classes, className } = props;
+  const { classes, className, handleClick } = props;
 
   return (
     <Paper className={className}>
       <MenuList>
-        <MenuItem selected className={classes.menuItem}>
+        <MenuItem selected className={classes.menuItem} onClick={(e) => handleClick(e, 'inbox')}>
           <ListItemIcon className={classes.icon}>
             <SendIcon />
           </ListItemIcon>
           <ListItemText classes={{ primary: classes.primary }} inset primary="Inbox" />
         </MenuItem>
-        <MenuItem className={classes.menuItem}>
+        <MenuItem className={classes.menuItem} onClick={(e) => handleClick(e, 'draft')}>
           <ListItemIcon className={classes.icon}>
             <DraftsIcon />
           </ListItemIcon>
           <ListItemText classes={{ primary: classes.primary }} inset primary="Drafts" />
         </MenuItem>
-        <MenuItem className={classes.menuItem}>
+        <MenuItem className={classes.menuItem} onClick={(e) => handleClick(e, 'trash')}>
           <ListItemIcon className={classes.icon}>
             <InboxIcon />
           </ListItemIcon>

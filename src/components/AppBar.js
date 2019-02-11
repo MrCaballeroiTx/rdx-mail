@@ -124,7 +124,13 @@ class PrimarySearchAppBar extends React.Component {
         <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
       </Menu>
     );
-  
+
+    let category;
+    const nonReadMails = this.props.mails.filter(mail => {
+      category = mail.type.toUpperCase();
+      return mail.read !== true
+    });
+
     return (
       <div>
         <AppBar position="static">
@@ -157,9 +163,17 @@ class PrimarySearchAppBar extends React.Component {
               />
             </div>
             <div className={classes.grow} />
+            <Typography
+              className={classes.title}
+              variant="h6"
+              color="inherit"
+              noWrap
+            >
+              {category}
+            </Typography>
             <div className={classes.sectionDesktop}>
               <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={nonReadMails.length} color="secondary">
                   <MailIcon />
                 </Badge>
               </IconButton>
