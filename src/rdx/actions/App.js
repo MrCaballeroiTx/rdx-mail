@@ -7,18 +7,23 @@ export const fireMeUp = (dispatch) => ({ type: START_APP });
 export function fetchingMails() {
     return {
         type: FETCHING_MAILS
-    }
-}
+    };
+};
+
+export const getMails = (emailType = "inbox", search = "") => {
+    return {
+        type: READ_MAILS,
+        payload: data.filter(mail => (mail.type === emailType.toLowerCase()) && (mail.subject.toLowerCase().indexOf(search) >= 0))
+    };
+};
 
 
-export const getMails = (emailType) => {
-    return (dispatch) => {
-        dispatch(fetchingMails())
-        setTimeout(() => {
-            return {
-                type: READ_MAILS,
-                payload: data.filter(email => email.type === emailType)
-            };
-        }, 3000);
-    }
-}
+// export const getMails = emailType => dispatch => {
+//     dispatch(fetchingMails())
+//     setTimeout(() => {
+//         return {
+//             type: READ_MAILS,
+//             payload: data.filter(email => email.type === emailType)
+//         };
+//     }, 3000);
+// }

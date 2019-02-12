@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { fireMeUp, getMails, getInboxMails } from 'rdx/actions/App'
 import { LinearProgress } from '@material-ui/core';
+import MailWindow from './components/MailWindow';
 const styles = theme => ({
 	contentWrapper: {
 		position: 'absolute',
@@ -20,7 +21,7 @@ const styles = theme => ({
 	list: {
 		float: 'left',
 		width: 'calc(100% - 250px)'
-	}
+	},
 })
 
 
@@ -29,27 +30,35 @@ class App extends Component {
 	componentWillMount() {
 		const { dispatch } = this.props;
 		dispatch(fireMeUp());
-		this.getInboxMails("inbox");
+		setTimeout(() => (this.getInboxMails("inbox")), 2000);
 	}
 
 	getInboxMails = (container) => {
 		const { dispatch } = this.props;
-		dispatch(getMails(container))
+		dispatch(getMails(container));
 	};
 
 	menuItemClicked = (e, container) => {
-		this.getInboxMails(container)
+		this.getInboxMails(container);
+	};
+
+	handleSearch = (keywords, container) => {
+		const { dispatch } = this.props;
+		const search = keywords.toLowerCase();
+		dispatch(getMails(container, search))
 	};
 
 	render() {
 		const { classes } = this.props;
+		const isFetching = this.props.app.isFetching;
 		return (
 			<div>
-				<AppBar mails={this.props.app.mails} />
+				<AppBar mails={this.props.app.mails} isFetching={isFetching} handleSearch={this.handleSearch} />
 				<div className={classes.contentWrapper}>
-					<LinearProgress />
+					{isFetching ? <LinearProgress /> : ''}
 					<Menu className={classes.menu} handleClick={this.menuItemClicked} />
 					<List className={classes.list} mails={this.props.app.mails} />
+					<MailWindow />
 				</div>
 			</div>
 		);

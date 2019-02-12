@@ -87,7 +87,8 @@ const styles = theme => ({
 class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
-    mobileMoreAnchorEl: null
+    mobileMoreAnchorEl: null,
+    search: ''
   };
 
   handleProfileMenuOpen = event => {
@@ -105,6 +106,11 @@ class PrimarySearchAppBar extends React.Component {
 
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
+  };
+
+  handleChange = (e, category) => {
+    this.setState({ [e.target.name]: e.target.value })
+    this.props.handleSearch(this.state.search, category)
   };
 
   render() {
@@ -155,7 +161,9 @@ class PrimarySearchAppBar extends React.Component {
                 <SearchIcon />
               </div>
               <InputBase
+                name="search"
                 placeholder="Search…"
+                onChange={(e) => this.handleChange(e, category)}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput

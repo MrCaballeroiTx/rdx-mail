@@ -15,6 +15,7 @@ export default function (state, action) {
         case START_APP:
             let cloned = Object.assign({}, state);
             cloned.started = true;
+            cloned.isFetching = true;
             return cloned;
         case READ_MAILS:
             return {
