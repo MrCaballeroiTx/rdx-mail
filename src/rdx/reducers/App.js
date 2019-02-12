@@ -1,5 +1,6 @@
 
 import { START_APP, READ_MAILS, FETCHING_MAILS } from 'rdx/types';
+import { DELETE_MAIL } from '../types';
 
 const APP_INITIAL_STATE = {
     started: false,
@@ -28,6 +29,11 @@ export default function (state, action) {
                 ...state,
                 mails: [],
                 isFetching: true
+            }
+        case DELETE_MAIL:
+            return {
+                ...state.mails.filter((data, i) => i !== action.id),
+                mails: [...state.mails.filter((data, i) => i !== action.id)]
             }
         default:
             break;

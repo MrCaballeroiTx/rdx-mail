@@ -29,7 +29,7 @@ function ListItemComposition(props) {
   return (
     <Paper className={className}>
       <MenuList>
-        <MenuItem selected className={classes.menuItem} onClick={(e) => handleClick(e, 'inbox')}>
+        <MenuItem className={classes.menuItem} onClick={(e) => handleClick(e, 'inbox')}>
           <ListItemIcon className={classes.icon}>
             <SendIcon />
           </ListItemIcon>

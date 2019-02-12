@@ -16,7 +16,7 @@ import Slide from '@material-ui/core/Slide';
 
 const styles = {
 	appBar: {
-		position: 'relative',
+		position: 'fixed'
 	},
 	flex: {
 		flex: 1,
@@ -27,8 +27,11 @@ const styles = {
 		left: 'initial',
 		bottom: 0,
 		right: '0 !important',
-		width: '25%',
+		width: '35%',
 		position: 'fixed'
+	},
+	list: {
+		marginTop: 70
 	}
 };
 
@@ -49,12 +52,17 @@ class MailWindow extends Component {
 		this.setState({ open: false });
 	};
 
+	handleDelete = (e, id) => {
+		e.preventDefault();
+		this.props.deleteMail(id);
+	};
+
 	render() {
-		const { classes } = this.props;
+		const { classes, mail } = this.props;
 		return (
 			<div>
 				<Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-					Open full-screen dialog
+					READ MAIL
 				</Button>
 				<Dialog
 					fullScreen
@@ -69,20 +77,23 @@ class MailWindow extends Component {
 								<CloseIcon />
 							</IconButton>
 							<Typography variant="h6" color="inherit" className={classes.flex}>
-								Sound
+								{mail.subject.toUpperCase()}
 							</Typography>
+							<Button color="secondary" onClick={(e) => this.handleDelete(e, mail.id)}>
+								delete
+							</Button>
 							<Button color="inherit" onClick={this.handleClose}>
 								save
 							</Button>
 						</Toolbar>
 					</AppBar>
-					<List>
+					<List className={classes.list}>
 						<ListItem button>
-							<ListItemText primary="Phone ringtone" secondary="Titania" />
+							<ListItemText primary={mail.from} secondary={mail.subject} />
 						</ListItem>
 						<Divider />
-						<ListItem button>
-							<ListItemText primary="Default notification ringtone" secondary="Tethys" />
+						<ListItem>
+							<p>{mail.body}</p>
 						</ListItem>
 					</List>
 				</Dialog>

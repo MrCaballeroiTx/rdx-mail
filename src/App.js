@@ -4,9 +4,9 @@ import Menu from './components/Menu';
 import List from './components/List';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { fireMeUp, getMails, getInboxMails } from 'rdx/actions/App'
+import { fireMeUp, getMails, deleteMail } from 'rdx/actions/App'
 import { LinearProgress } from '@material-ui/core';
-import MailWindow from './components/MailWindow';
+
 const styles = theme => ({
 	contentWrapper: {
 		position: 'absolute',
@@ -48,6 +48,11 @@ class App extends Component {
 		dispatch(getMails(container, search))
 	};
 
+	deleteMail = id => {
+		const { dispatch } = this.props;
+		dispatch(deleteMail(id));
+	};
+
 	render() {
 		const { classes } = this.props;
 		const isFetching = this.props.app.isFetching;
@@ -57,8 +62,7 @@ class App extends Component {
 				<div className={classes.contentWrapper}>
 					{isFetching ? <LinearProgress /> : ''}
 					<Menu className={classes.menu} handleClick={this.menuItemClicked} />
-					<List className={classes.list} mails={this.props.app.mails} />
-					<MailWindow />
+					<List className={classes.list} mails={this.props.app.mails} deleteMail={this.deleteMail} />
 				</div>
 			</div>
 		);

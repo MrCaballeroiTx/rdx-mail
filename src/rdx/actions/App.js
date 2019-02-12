@@ -1,5 +1,5 @@
 
-import { START_APP, READ_MAILS, FETCHING_MAILS } from '../types';
+import { START_APP, READ_MAILS, FETCHING_MAILS, DELETE_MAIL } from '../types';
 import data from '../../data';
 
 export const fireMeUp = (dispatch) => ({ type: START_APP });
@@ -17,6 +17,12 @@ export const getMails = (emailType = "inbox", search = "") => {
     };
 };
 
+export const deleteMail = id => {
+    return {
+        type: DELETE_MAIL,
+        id
+    }
+};
 
 // export const getMails = emailType => dispatch => {
 //     dispatch(fetchingMails())

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Chip, List, ListItem, ListItemText, Checkbox } from '@material-ui/core';
+import MailWindow from './MailWindow';
 
 const styles = theme => ({
   root: {
@@ -62,6 +63,7 @@ class CheckboxList extends React.Component {
                 </span>
                 <Chip label={mail.read ? 'Read' : 'NonRead'} className={classes.chip} />
               </ListItemText>
+              <MailWindow mail={mail} deleteMail={this.props.deleteMail} />
             </ListItem>
           ))}
         </List>
